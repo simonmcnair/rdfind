@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap
         cd /tmp/rdfind && \
         ./configure --enable-warnings CXXFLAGS=-std=c++17 && \
         make && \
+	cat ./test-suite.log && \
         #make check && \
 	make distcheck CXXFLAGS=-std=c++17 && \
  	make clean  && \
