@@ -25,7 +25,7 @@ env:
     #REGISTRY: ghcr.io
     REGISTRY: ''
     # use DOCKERHUB_USERNAME as the name maybe different from the GitHub username
-    IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/arm-dependencies
+    IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/rdfind
     TAG: latest
 
 jobs:
@@ -125,7 +125,7 @@ jobs:
                 with:
                     context: .
                     push: ${{ github.event_name != 'pull_request' }}
-                    platforms: linux/amd64,linux/arm64,linux/arm/v7
+                    platforms: linux/amd64
                     tags: |
                       ${{ env.IMAGE_NAME }}:${{ env.TAG }}
                       ${{ env.IMAGE_NAME }}:${{ env.VERSION }}
