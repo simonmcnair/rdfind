@@ -1,26 +1,28 @@
 ###########################################################
 # base image, used for build stages and final images
-FROM phusion/baseimage:jammy-1.0.4 AS base
+#FROM phusion/baseimage:jammy-1.0.4 AS base
+FROM debian:bookworm-slim AS base
 RUN mkdir /build
 WORKDIR /build
 
-RUN install_clean \
-        git \
-        wget \
-        build-essential \
-        libcurl4-openssl-dev \
-        libssl-dev \
-        gnupg \
-        libudev-dev \
-        udev \
-        python3 \
-        python3-dev \
-        python3-pip \
-        nano \
-        vim \
-	libcap2-bin \
-	autoconf \
-        nettle-dev
+RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap2-bin --yes
+#RUN install_clean \
+#        git \
+#        wget \
+#        build-essential \
+#        libcurl4-openssl-dev \
+#        libssl-dev \
+#        gnupg \
+#        libudev-dev \
+#        udev \
+#        python3 \
+#        python3-dev \
+#        python3-pip \
+#        nano \
+#        vim \
+#	libcap2-bin \
+#	autoconf \
+#        nettle-dev
 
 
   RUN   echo -e "${RED}Finding current rdfind version${NC}" && \
