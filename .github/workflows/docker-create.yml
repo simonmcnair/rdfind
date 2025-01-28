@@ -79,6 +79,7 @@ jobs:
                 name: Set Version number
                 run: |
                     VER=1.0
+                    TAG=test
             -
                 name: Set build datetime
                 run: |
