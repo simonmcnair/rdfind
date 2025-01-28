@@ -28,7 +28,7 @@ env:
     #IMAGE_NAME: simonmcnair/rdfind
     IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/rdfind
     TAG: latest
-    VER: 1.0
+    VERSION: 1.0
 
 jobs:
     deploy:
