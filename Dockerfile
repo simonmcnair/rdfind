@@ -6,24 +6,11 @@ RUN mkdir /build
 WORKDIR /build
 
 RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap2-bin wget curl  --yes
-#RUN install_clean \
-#        git \
-#        wget \
-#        build-essential \
-#        libcurl4-openssl-dev \
-#        libssl-dev \
-#        gnupg \    
-#	 libcap2-bin \
-#	 autoconf \
-#        nettle-dev
 
-
-  RUN   echo -e "${RED}Finding current rdfind version${NC}" && \
+RUN   echo -e "${RED}Finding current rdfind version${NC}" && \
         RDFIND_VERSION=$(curl --silent 'https://github.com/pauldreik/rdfind/releases' | grep 'rdfind/tree/*' | head -n 1 | sed -e 's/[^0-9\.]*//g') && \
         echo -e "${RED}Downloading rdfind $RDFIND_VERSION${NC}" && \
         set -eux && \
-       # wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz.asc" && \
-       # wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz"
         wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION.tar.gz.asc" && \
         wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION.tar.gz" && \
         GNUPGHOME="$(mktemp -d)" && export GNUPGHOME && \
@@ -37,21 +24,11 @@ RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap
         rm rdfind.tar.bz2 && \
         cd /tmp/rdfind && \
 	./bootstrap.sh && \
-        #./configure --enable-warnings CXXFLAGS=-std=c++17 && \
-        #make && \
-	#cat /tmp/rdfind/test-suite.log && \
-        #make check && \
-	#make distcheck CXXFLAGS=-std=c++17 && \
-	#cat /tmp/rdfind/test-suite.log && \
- 	#make clean  && \
-        #eval $(DEB_CXXFLAGS_APPEND=-std=c++17 DEB_BUILD_MAINT_OPTIONS="hardening=+all qa=+all,-canary reproducible=+all" dpkg-buildflags --export=sh) && \
         ./configure && \
         make && \
 	make install
-	#&& \
-        #make check
-# clean up apt
-#RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG VERSION
 ARG BUILD_DATE
