@@ -25,7 +25,7 @@ env:
     #REGISTRY: ghcr.io
     REGISTRY: ''
     # use DOCKERHUB_USERNAME as the name maybe different from the GitHub username
-    IMAGE_NAME: simonmcnair/rdfind
+    #IMAGE_NAME: simonmcnair/rdfind
     TAG: latest
 
 jobs:
