@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap
         wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION.tar.gz.asc" && \
         wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION.tar.gz" && \
         GNUPGHOME="$(mktemp -d)" && export GNUPGHOME && \
-	gpg --batch -keyserver keyserver.ubuntu.com --recv-keys 0xcc3c51ba88205b19728a6f07c9d9a0ea44eae0eb && \
+	gpg --batch --keyserver keyserver.ubuntu.com --recv-keys 0xcc3c51ba88205b19728a6f07c9d9a0ea44eae0eb && \
         gpg --batch --verify rdfind.tar.gz.sig rdfind.tar.bz2; rm -rf "$GNUPGHOME" rdfind.tar.gz.sig && \
         mkdir -p /tmp/rdfind && \
         tar --extract \
