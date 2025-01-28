@@ -21,7 +21,7 @@ RUN install_clean \
         nettle-dev
 
   RUN   echo -e "${RED}Finding current rdfind version${NC}" && \
-        RDFIND_VERSION=$(curl --silent 'https://github.com/rdfind/rdfind/releases' | grep 'rdfind/tree/*' | head -n 1 | sed -e 's/[^0-9\.]*//g') && \
+        RDFIND_VERSION=$(curl --silent 'https://github.com/pauldreik/rdfind/releases' | grep 'rdfind/tree/*' | head -n 1 | sed -e 's/[^0-9\.]*//g') && \
         echo -e "${RED}Downloading rdfind $RDFIND_VERSION${NC}" && \
         set -eux && \
         wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz.asc" && \
