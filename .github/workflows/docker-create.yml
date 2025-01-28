@@ -26,8 +26,9 @@ env:
     REGISTRY: ''
     # use DOCKERHUB_USERNAME as the name maybe different from the GitHub username
     #IMAGE_NAME: simonmcnair/rdfind
-    IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/automatic-ripping-machine
+    IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/rdfind
     TAG: latest
+    VER: 1.0
 
 jobs:
     deploy:
@@ -83,11 +84,6 @@ jobs:
                 uses: docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96
                 with:
                     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-            -
-                name: Set Version number
-                run: |
-                    VER=1.0
-                    TAG=test
             -
                 name: Set build datetime
                 run: |
