@@ -41,6 +41,7 @@ RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap
 	#cat /tmp/rdfind/test-suite.log && \
         #make check && \
 	make distcheck CXXFLAGS=-std=c++17 && \
+	cat /tmp/rdfind/test-suite.log && \
  	make clean  && \
         eval $(DEB_CXXFLAGS_APPEND=-std=c++17 DEB_BUILD_MAINT_OPTIONS="hardening=+all qa=+all,-canary reproducible=+all" dpkg-buildflags --export=sh) && \
         ./configure && \
