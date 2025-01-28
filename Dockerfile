@@ -39,7 +39,7 @@ RUN install_clean \
         rm rdfind.tar.bz2 && \
         cd /tmp/rdfind && \
         ./configure && \
-        make -install && \
+        make && \
         make check && \
 
 # clean up apt
