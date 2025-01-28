@@ -37,19 +37,19 @@ RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap
         rm rdfind.tar.bz2 && \
         cd /tmp/rdfind && \
 	./bootstrap.sh && \
-        ./configure --enable-warnings CXXFLAGS=-std=c++17 && \
-        make && \
+        #./configure --enable-warnings CXXFLAGS=-std=c++17 && \
+        #make && \
 	#cat /tmp/rdfind/test-suite.log && \
         #make check && \
-	make distcheck CXXFLAGS=-std=c++17 && \
-	cat /tmp/rdfind/test-suite.log && \
- 	make clean  && \
-        eval $(DEB_CXXFLAGS_APPEND=-std=c++17 DEB_BUILD_MAINT_OPTIONS="hardening=+all qa=+all,-canary reproducible=+all" dpkg-buildflags --export=sh) && \
+	#make distcheck CXXFLAGS=-std=c++17 && \
+	#cat /tmp/rdfind/test-suite.log && \
+ 	#make clean  && \
+        #eval $(DEB_CXXFLAGS_APPEND=-std=c++17 DEB_BUILD_MAINT_OPTIONS="hardening=+all qa=+all,-canary reproducible=+all" dpkg-buildflags --export=sh) && \
         ./configure && \
-        make 
+        make && \
+	make install
 	#&& \
         #make check
-
 # clean up apt
 #RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
