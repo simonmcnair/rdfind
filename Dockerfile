@@ -26,7 +26,9 @@ RUN   echo -e "${RED}Finding current rdfind version${NC}" && \
 	./bootstrap.sh && \
         ./configure && \
         make && \
-	make install
+	make install && \
+ 	cd / ** \
+ 	rm -rf /tmp/rdfind
 
 RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
