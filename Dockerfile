@@ -34,11 +34,4 @@ RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG VERSION
 ARG BUILD_DATE
-# set metadata
-#LABEL org.opencontainers.image.source=https://github.com/simonmcnair/rdfind/rdfind.git
-#LABEL org.opencontainers.image.url=https://github.com/simonmcnair/rdfind/
-LABEL org.opencontainers.image.description="rdfind compiled for docker"
-#LABEL org.opencontainers.image.documentation=https://github.com/simonmcnair/rdfind/new/main/README.md
-LABEL org.opencontainers.image.license=GPLV2
-LABEL org.opencontainers.image.version=$VERSION
-LABEL org.opencontainers.image.created=$BUILD_DATE
+
