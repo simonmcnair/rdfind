@@ -26,8 +26,8 @@ RUN install_clean \
         set -eux && \
        # wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz.asc" && \
        # wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz"
-        wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION-source.tar.gz.asc" && \
-        wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION-source.tar.gz" && \
+        wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION.tar.gz.asc" && \
+        wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION.tar.gz" && \
         GNUPGHOME="$(mktemp -d)" && export GNUPGHOME && \
         gpg --batch --verify rdfind.tar.gz.sig rdfind.tar.bz2; rm -rf "$GNUPGHOME" rdfind.tar.gz.sig && \
         mkdir -p /tmp/rdfind && \
