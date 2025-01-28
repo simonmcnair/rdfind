@@ -18,7 +18,10 @@ RUN install_clean \
         python3-pip \
         nano \
         vim \
+	libcap2-bin \
+	autoconf \
         nettle-dev
+
 
   RUN   echo -e "${RED}Finding current rdfind version${NC}" && \
         RDFIND_VERSION=$(curl --silent 'https://github.com/pauldreik/rdfind/releases' | grep 'rdfind/tree/*' | head -n 1 | sed -e 's/[^0-9\.]*//g') && \
@@ -38,6 +41,12 @@ RUN install_clean \
 	        --strip-components 1 && \
         rm rdfind.tar.bz2 && \
         cd /tmp/rdfind && \
+        ./configure --enable-warnings CXXFLAGS=-std=c++17&& \
+        make && \
+        make check && \
+	make distcheck CXXFLAGS=-std=c++17 && \
+ 	make clean  && \
+        eval $(DEB_CXXFLAGS_APPEND=-std=c++17 DEB_BUILD_MAINT_OPTIONS="hardening=+all qa=+all,-canary reproducible=+all" dpkg-buildflags --export=sh) && \
         ./configure && \
         make && \
         make check && \
