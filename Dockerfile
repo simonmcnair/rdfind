@@ -49,10 +49,10 @@ RUN install_clean \
         eval $(DEB_CXXFLAGS_APPEND=-std=c++17 DEB_BUILD_MAINT_OPTIONS="hardening=+all qa=+all,-canary reproducible=+all" dpkg-buildflags --export=sh) && \
         ./configure && \
         make && \
-        make check && \
+        make check
 
 # clean up apt
-RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+#RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG VERSION
 ARG BUILD_DATE
