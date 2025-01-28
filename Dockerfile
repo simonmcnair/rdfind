@@ -27,9 +27,19 @@ RUN install_clean \
        # wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz.asc" && \
        # wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/$RDFIND_VERSION/rdfind-$RDFIND_VERSION-source.tar.gz"
         wget -O rdfind.tar.gz.sig "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION-source.tar.gz.asc" && \
-        wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION-source.tar.gz"
-
-
+        wget -O rdfind.tar.bz2 "rdfind.pauldreik.se/rdfind-$RDFIND_VERSION-source.tar.gz" && \
+        GNUPGHOME="$(mktemp -d)" && export GNUPGHOME && \
+        gpg --batch --verify rdfind.tar.gz.sig rdfind.tar.bz2; rm -rf "$GNUPGHOME" rdfind.tar.gz.sig && \
+        mkdir -p /tmp/rdfind && \
+        tar --extract \
+	        --file rdfind.tar.bz2 \
+	        --directory /tmp/handbrake \
+	        --strip-components 1 && \
+        rm rdfind.tar.bz2 && \
+        cd /tmp/rdfind && \
+        ./configure && \
+        make -install && \
+        make check && \
 
 # clean up apt
 RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
