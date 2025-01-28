@@ -34,7 +34,7 @@ RUN install_clean \
         mkdir -p /tmp/rdfind && \
         tar --extract \
 	        --file rdfind.tar.bz2 \
-	        --directory /tmp/handbrake \
+	        --directory /tmp/rdfind \
 	        --strip-components 1 && \
         rm rdfind.tar.bz2 && \
         cd /tmp/rdfind && \
