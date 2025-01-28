@@ -50,13 +50,9 @@ jobs:
                 name: Set tag for non-default branch
                 if: ${{ steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.default_branch != '' && github.actor != 'dependabot[bot]' }}
                 run: |
-                    echo "Run me: (${{ steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.default_branch != '' && github.actor != 'dependabot[bot]' }})"
-                    echo "Set tag for PR: ${{ github.event_name == 'pull_request' || github.actor == 'dependabot[bot]' && steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.default_branch != '' }} "
                     echo "Actor = ${{ github.actor }}"
                     echo "event name is ${{ github.event_name }}"
-                    echo "Branch name is ${{ steps.branch-name.outputs.ref_branch }}"
-                    echo "Main name is ${{ steps.branch-name.outputs.default_branch }}"
-                    echo "TAG=${{ steps.branch-name.outputs.ref_branch }}" >> $GITHUB_ENV
+
             -
                 name: Set up QEMU
                 uses: docker/setup-qemu-action@v3
