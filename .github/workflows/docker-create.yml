@@ -26,6 +26,7 @@ env:
     REGISTRY: ''
     # use DOCKERHUB_USERNAME as the name maybe different from the GitHub username
     #IMAGE_NAME: simonmcnair/rdfind
+    IMAGE_NAME: ${{ github.repository }}
     TAG: latest
 
 jobs:
