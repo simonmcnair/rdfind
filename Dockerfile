@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap
 	        --strip-components 1 && \
         rm rdfind.tar.bz2 && \
         cd /tmp/rdfind && \
+	./bootstrap.sh && \
         ./configure --enable-warnings CXXFLAGS=-std=c++17 && \
         make && \
 	#cat /tmp/rdfind/test-suite.log && \
