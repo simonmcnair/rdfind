@@ -5,7 +5,7 @@ FROM debian:bookworm-slim AS base
 RUN mkdir /build
 WORKDIR /build
 
-RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap2-bin --yes
+RUN apt-get update && apt-get install autoconf build-essential nettle-dev libcap2-bin wget libcurl4-openssl-dev  --yes
 #RUN install_clean \
 #        git \
 #        wget \
