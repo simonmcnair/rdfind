@@ -77,14 +77,12 @@ jobs:
                 if: ${{ env.CURRENT_TAG == env.RELEASE_TAG }}
                 run: |
                    echo "run_build=false" >> $GITHUB_ENV   
-                   echo "$CURRENT_TAG != $RELEASE_TAG"
             -
                 name: run a build
                 id: if_old_release
                 if: ${{ env.CURRENT_TAG != env.RELEASE_TAG }}
                 run: |
                    echo "run_build=true" >> $GITHUB_ENV   
-                   echo "$CURRENT_TAG != $RELEASE_TAG"
 
             -
                 name: Set up QEMU
