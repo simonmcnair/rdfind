@@ -68,7 +68,8 @@ jobs:
                 id: get_current_tag
                 run: |
                   # Get the current tag of the repository (if any)
-                  CURRENT_TAG=$(curl -s https://api.github.com/repos/simonmcnair/rdfind/releases/latest)
+                  MY_RELEASE_TAG=$(curl -s https://api.github.com/repos/simonmcnair/rdfind/releases/latest)
+                  CURRENT_TAG=$(echo $MY_RELEASE_TAG | jq -r .tag_name)
                   echo "Current tag: $CURRENT_TAG"
                   echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
         
