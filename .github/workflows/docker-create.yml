@@ -35,7 +35,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         permissions:
-            contents: read
+            contents: write
             packages: write
 
         steps:
@@ -54,24 +54,58 @@ jobs:
        #             echo "Branch name is ${{ steps.branch-name.outputs.ref_branch }}"
        #             echo "Main name is ${{ steps.branch-name.outputs.default_branch }}"
        #             echo "TAG=${{ steps.branch-name.outputs.ref_branch }}" >> $GITHUB_ENV
+            -
+                name: Fetch latest release from external repository
+                id: get_release
+                run: |
+                  # Fetch the latest release tag from the external repository
+                  latest_release=$(curl -s https://api.github.com/repos/pauldreik/rdfind/releases/latest)
+                  RELEASE_TAG=$(echo $latest_release | jq -r .name)
+                  echo "Latest release from external repo: $RELEASE_TAG"
+                  echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+            -
+                name: Get current release tag from Git
+                id: get_current_tag
+                run: |
+                  # Get the current tag of the repository (if any)
+                  MY_RELEASE_TAG=$(curl -s https://api.github.com/repos/simonmcnair/rdfind/releases/latest)
+                  CURRENT_TAG=$(echo $MY_RELEASE_TAG | jq -r .name)
+                  echo "Current tag: $CURRENT_TAG"
+                  echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
+            -
+                name: Do not run a build
+                id: if_new_release
+                if: ${{ env.CURRENT_TAG == env.RELEASE_TAG }}
+                run: |
+                   echo "run_build=false" >> $GITHUB_ENV   
+            -
+                name: run a build
+                id: if_old_release
+                if: ${{ env.CURRENT_TAG != env.RELEASE_TAG }}
+                run: |
+                   echo "run_build=true" >> $GITHUB_ENV   
 
             -
                 name: Set up QEMU
+                if: ${{ env.run_build == 'true' }}
                 uses: docker/setup-qemu-action@v3
                 with:
                     platforms: all
             # Workaround: https://github.com/docker/build-push-action/issues/461
             -
                 name: Setup Docker buildx
+                if: ${{ env.run_build == 'true' }}
                 uses: docker/setup-buildx-action@v3
             -
                 name: Available platforms
+                if: ${{ env.run_build == 'true' }}
                 run: echo ${{ steps.buildx.outputs.platforms }}
 
             # Login against all registries
 
             -
                 name: Login to DockerHub
+                if: ${{ env.run_build == 'true' }}
                 uses: docker/login-action@v3
                 with:
                     username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -81,12 +115,14 @@ jobs:
             # https://github.com/docker/metadata-action
             -
                 name: Extract Docker metadata
+                if: ${{ env.run_build == 'true' }}
                 id: meta
                 uses: docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96
                 with:
                     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             -
                 name: Set build datetime
+                if: ${{ env.run_build == 'true' }}
                 run: |
                     TIMESTAMP=$(date -u +'%Y-%m-%d T%H:%M:%SZ')
                     echo "BUILD_DATE=$TIMESTAMP" >> $GITHUB_ENV
@@ -95,6 +131,7 @@ jobs:
             # https://github.com/docker/build-push-action
             -
                 name: Build and push Docker image
+                if: ${{ env.run_build == 'true' }}
                 id: build-and-push
                 uses: docker/build-push-action@v6
                 with:
@@ -108,3 +145,11 @@ jobs:
                       ${{ env.IMAGE_NAME }}:${{ env.TAG }}
                       ${{ env.IMAGE_NAME }}:${{ env.VERSION }}
                     #labels: ${{ steps.meta.outputs.labels }}
+
+            -
+                name: Create Release
+                if: ${{ env.run_build == 'true' }}
+                id: create_release
+                uses: softprops/action-gh-release@v2
+                with:
+                    tag_name: ${{ env.RELEASE_TAG }}
