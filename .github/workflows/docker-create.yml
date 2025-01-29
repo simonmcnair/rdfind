@@ -59,7 +59,7 @@ jobs:
                 run: |
                   # Fetch the latest release tag from the external repository
                   latest_release=$(curl -s https://api.github.com/repos/pauldreik/rdfind/releases/latest)
-                  RELEASE_TAG=$(echo $latest_release | jq -r .tag_name)
+                  RELEASE_TAG=$(echo $latest_release | jq -r .name)
                   echo "Latest release from external repo: $RELEASE_TAG"
                   echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
                   echo "run_build=false" >> $GITHUB_ENV
@@ -70,7 +70,7 @@ jobs:
                 run: |
                   # Get the current tag of the repository (if any)
                   MY_RELEASE_TAG=$(curl -s https://api.github.com/repos/simonmcnair/rdfind/releases/latest)
-                  CURRENT_TAG=$(echo $MY_RELEASE_TAG | jq -r .tag_name)
+                  CURRENT_TAG=$(echo $MY_RELEASE_TAG | jq -r .name)
                   echo "Current tag: $CURRENT_TAG"
                   echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
         
