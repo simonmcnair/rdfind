@@ -77,9 +77,10 @@ jobs:
             -
                 name: Check if release tags match
                 id: check_match
-                if: ${{ env.CURRENT_TAG }} != ${{ env.RELEASE_TAG }}
+                if: ${{ env.CURRENT_TAG != env.RELEASE_TAG }}
                 run: |
-                   echo "run_build=true" >> $GITHUB_ENV        
+                   echo "run_build=true" >> $GITHUB_ENV   
+                   echo "$CURRENT_TAG != $RELEASE_TAG"
 
             -
                 name: Set up QEMU
